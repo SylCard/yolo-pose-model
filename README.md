@@ -1,6 +1,6 @@
 # YOLO Pose Training Project
 
-This project implements YOLO pose model training with automatic checkpointing every 10 epochs on the COCO dataset.
+This project implements YOLO pose model training with automatic checkpointing every 10 epochs on the COCO dataset, and includes prediction capabilities for video files.
 
 ## Requirements
 
@@ -64,18 +64,35 @@ The script will:
 - Train on COCO pose dataset for 100 epochs
 - Automatically use available GPU (CUDA for NVIDIA, MPS for M1/M2 Mac)
 
+## Prediction
+
+1. Place your test video file named `test.mov` in the project root directory
+2. Run the prediction script:
+```bash
+python predict.py
+```
+
+The script will:
+- Automatically use the latest trained model from checkpoints (or pretrained model if no checkpoints exist)
+- Process the video and display pose estimations
+- Save the output video in the `predictions/test_output` directory
+- Use the same device (GPU/CPU) as training
+
 ## Project Structure
 
 - `train_yolo_pose.py`: Main training script
+- `predict.py`: Prediction script for video files
 - `requirements.txt`: Project dependencies
 - `.gitignore`: Git ignore configuration
+- `test.mov`: Your test video file (not included in repository)
 
 ## Notes
 
 - For Windows/Linux: The script will automatically use CUDA if an NVIDIA GPU is available
 - For M1/M2 Mac: The script will use Metal Performance Shaders (MPS) for GPU acceleration
 - Checkpoints are saved every 10 epochs in the 'checkpoints' directory
-- Virtual environment and checkpoints are excluded from git tracking
+- Prediction results are saved in the 'predictions' directory
+- Virtual environment, checkpoints, and test video are excluded from git tracking
 
 ## Troubleshooting
 
@@ -88,3 +105,8 @@ For M1/M2 Mac memory issues:
 1. Reduce batch size
 2. Close unnecessary applications
 3. Ensure sufficient swap space is available
+
+For prediction issues:
+1. Ensure test.mov exists in the project root directory
+2. Check if the model weights were properly saved during training
+3. Try using the pretrained model if custom training weights aren't working
